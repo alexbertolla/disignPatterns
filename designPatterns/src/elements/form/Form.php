@@ -6,33 +6,36 @@
  * and open the template in the editor.
  */
 
-namespace src\elements\form;
+namespace elements\form;
 
-use src\elements\AbstractElement;
-use src\interfaces\InterfaceFullElements;
+use elements\form\validators\Validator;
+use interfaces\InterfaceFullElements;
+use interfaces\InterfaceElement;
+
 /**
  * Description of Form
  *
  * @author alex
  */
-class Form extends AbstractElement implements InterfaceFullElements{
+class Form extends Validator implements InterfaceFullElements, InterfaceElement {
 
+    private $name;
+    private $id;
     private $form;
     private $method;
     private $action;
     private $children;
 
     public function __construct($name, $id, $method, $action) {
-        parent::__construct($name, $id);
+        $this->name = $name;
+        $this->id = $id;
         $this->method = $method;
         $this->action = $action;
         $this->children = [];
     }
 
     public function abrirTag() {
-        $attributes = $this->renderAttributes()
-                . " method={$this->method} "
-                . " action={$this->action} ";
+        $attributes = $this->setAttributes();
         $this->form = "<form {$attributes} >";
     }
 
@@ -40,21 +43,50 @@ class Form extends AbstractElement implements InterfaceFullElements{
         $this->form .= ' </form>';
     }
 
-    public function render() {
+    public function setAttributes() {
+        return " name='{$this->name}' "
+                . " id='{$this->id}' "
+                . " method={$this->method} "
+                . " action={$this->action} ";
+    }
+
+    private function renderPrepare($elementsRendered) {
         $this->abrirTag();
-        $this->renderElement();
+        $this->form.=$elementsRendered;
         $this->fecharTag();
+    }
+
+    public function render() {
+        $renderAll = $this->renderElements();
+        $this->renderPrepare($renderAll);
         echo $this->form;
     }
 
-    public function renderElements() {
-        foreach ($this->children as $child) {
-            $this->form .= $child->render();
+    public function renderField($field) {
+        $child = $this->children[$field];
+        if ($child) {
+            $this->renderPrepare($child->render());
+            $resultado = $this->form;
+        }else{
+            $resultado = "elemento {$field} não existe no formulário! ";
         }
+        $this->exibirResultado($resultado);
     }
 
-    public function addElement($element) {
-        $this->children[] = $element;
+    private function exibirResultado($resultado) {
+        echo $resultado;
+    }
+
+    public function renderElements() {
+        $form = '';
+        foreach ($this->children as $child) {
+            $form .= $child->render();
+        }
+        return $form;
+    }
+
+    public function createField(InterfaceElement $element, $field) {
+        $this->children[$field] = $element;
     }
 
 }

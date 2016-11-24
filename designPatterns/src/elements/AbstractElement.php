@@ -6,9 +6,9 @@
  * and open the template in the editor.
  */
 
-namespace src\elements;
+namespace elements;
 
-use src\interfaces\InterfaceElement;
+use interfaces\InterfaceElement;
 
 /**
  * Description of AbstractElement
@@ -17,16 +17,16 @@ use src\interfaces\InterfaceElement;
  */
 abstract class AbstractElement implements InterfaceElement {
 
-    protected $name;
-    protected $id;
-
-    public function __construct($name, $id) {
-        $this->name = $name;
-        $this->id = $id;
-    }
-
-    protected function renderAttributes() {
-        return " name='{$this->name}' id='{$this->id}' ";
-    }
+//    protected $name;
+//    protected $id;
+//
+//    public function __construct($name, $id) {
+//        $this->name = $name;
+//        $this->id = $id;
+//    }
+//
+//    public function renderAttributes() {
+//        return " name='{$this->name}' id='{$this->id}' ";
+//    }
 
 }
