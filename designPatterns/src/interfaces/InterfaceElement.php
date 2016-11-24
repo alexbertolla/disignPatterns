@@ -6,14 +6,14 @@
  * and open the template in the editor.
  */
 
-namespace src\interfaces;
+namespace interfaces;
 
 /**
  *
  * @author alex
  */
 interface InterfaceElement {
+    public function setAttributes();
 
     public function render();
-
 }

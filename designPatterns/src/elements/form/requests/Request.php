@@ -5,12 +5,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+namespace elements\form\requests;
 /**
+ * Description of Request
  *
- * @author alex
+ * @author alex.bertolla
  */
-interface InterfaceInput {
-
-    public function renderInput();
+class Request {
+    public function __construct() {
+    }
 }

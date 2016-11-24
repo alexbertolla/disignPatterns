@@ -6,27 +6,39 @@
  * and open the template in the editor.
  */
 
-namespace src\elements\input;
+namespace elements\input;
 
-use src\elements\AbstractElement;
-use src\interfaces\InterfaceEmptyElements;
+use interfaces\InterfaceElement;
+use interfaces\InterfaceEmptyElements;
+use elements\label\Label;
+
 /**
  * Description of AbstractInput
  *
  * @author alex
  */
-abstract class AbstractInput extends AbstractElement  implements InterfaceEmptyElements{
+abstract class AbstractInput implements InterfaceElement, InterfaceEmptyElements {
 
+    protected $name;
+    protected $id;
     protected $input;
     protected $value;
     protected $type;
     protected $label;
 
-    public function __construct($name, $id, $value, $type, $label) {
-        parent::__construct($name, $id);
-        $this->value = $value;
+    public function __construct($name, $id, $value, $type, Label $label = NULL) {
         $this->type = $type;
+        $this->name = $name;
+        $this->id = $id;
+        $this->value = $value;
         $this->label = $label;
+    }
+
+    public function setAttributes() {
+        return " type='{$this->type}' "
+                . " name='{$this->name}' "
+                . " id='{$this->id}' "
+                . " value='{$this->value}' ";
     }
 
 }

@@ -6,9 +6,10 @@
  * and open the template in the editor.
  */
 
-namespace src\elements\input;
+namespace elements\input;
 
-use src\elements\input\AbstractInput;
+use elements\input\AbstractInput;
+use elements\label\Label;
 
 /**
  * Description of RadioInput
@@ -19,28 +20,30 @@ class RadioInput extends AbstractInput {
 
     private $checked;
 
-    public function __construct($name, $id, $value, $type, $label, $checked) {
-        parent::__construct($name, $id, $value, $type, $label);
+    public function __construct($name, $id, $value, $checked, Label $label) {
+        parent::__construct($name, $id, $value, 'radio', $label);
         $this->checked = $checked;
     }
 
     public function declararTag() {
-        $this->checked = ($this->checked) ? $this->checked : '';
-        $this->input = "<input "
-                . " type='{$this->type}' "
-                . " id='{$this->id} "
-                . " name ='{$this->name}' "
-                . " value='{$this->value}' "
-                . " {$this->checked} "
-                . "/>";
+
+        $this->input = "<input {$this->setAttributes()} />";
+    }
+
+    public function setAttributes() {
+        $attributes = parent::setAttributes();
+        $attributes .= ($this->checked) ? 'checked=\'checked\'' : '';
+        return $attributes;
     }
 
     public function render() {
-        echo $this->input;
+        $this->declararTag();
+        $this->setLabel();
+        return $this->input;
     }
-    
+
     public function setLabel() {
-        $this->input = $this->label . ': ' . $this->input;
+        $this->input = $this->label->render() . $this->input;
     }
 
 }
