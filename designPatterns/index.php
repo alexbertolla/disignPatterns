@@ -22,9 +22,9 @@ and open the template in the editor.
         $inputRadioF = new InputRadio('radio', 'sexo', '', 'f', 'Feminino', FALSE);
 
         $form = new Form('formulario', '', 'POST');
-        $form->attInput($inputText);
-        $form->attInput($inputRadioM);
-        $form->attInput($inputRadioF);
+        $form->addInput($inputText);
+        $form->addInput($inputRadioM);
+        $form->addInput($inputRadioF);
         $form->render();
         
         ?>

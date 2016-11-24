@@ -25,7 +25,7 @@ class Form {
         $this->children = array();
     }
 
-    function attInput(InterfaceInput $input) {
+    function addInput(InterfaceInput $input) {
         $this->children[]=$input->renderInput();
     }
     
