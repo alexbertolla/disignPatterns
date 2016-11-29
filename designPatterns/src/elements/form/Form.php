@@ -11,6 +11,7 @@ namespace elements\form;
 use elements\form\validators\Validator;
 use interfaces\InterfaceFullElements;
 use interfaces\InterfaceElement;
+use elements\fieldset\Fieldset;
 
 /**
  * Description of Form
@@ -67,7 +68,7 @@ class Form extends Validator implements InterfaceFullElements, InterfaceElement 
         if ($child) {
             $this->renderPrepare($child->render());
             $resultado = $this->form;
-        }else{
+        } else {
             $resultado = "elemento {$field} não existe no formulário! ";
         }
         $this->exibirResultado($resultado);
@@ -79,14 +80,16 @@ class Form extends Validator implements InterfaceFullElements, InterfaceElement 
 
     public function renderElements() {
         $form = '';
+//        $form .= $this->children->render();
         foreach ($this->children as $child) {
             $form .= $child->render();
         }
         return $form;
     }
 
-    public function createField(InterfaceElement $element, $field) {
-        $this->children[$field] = $element;
+    public function createField(InterfaceElement $element, Fieldset $field ) {
+        $field->addChild($element);
+        $this->children[$field->name] = $field;
     }
 
 }
