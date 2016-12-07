@@ -22,14 +22,19 @@ use elements\fieldset\Fieldset;
     <body>
         <?php
         include_once './autoload.php';
-        $formulario = new Form('form2', 'form2', 'POST', 'index.php');
-        $fieldset = new Fieldset('fieldset', 'fieldset');
-        $formulario->createField(new Paragraph(new Label('FORM 2 - Formulário Login')), $fieldset);
-        $formulario->createField(new Paragraph(new TextInput('txt_username', 'txt_username', '', new Label('Username: '))), $fieldset);
-        $formulario->createField(new Paragraph(new TextInput('txt_password', 'txt_password', '', new Label('Password: '))), $fieldset);
-        $formulario->createField(new Button('btn_login', 'btn_login', 'button', new Label('LOGIN')), $fieldset);
-        $formulario->render();
         
+        $txtNome = new TextInput('nome', 'nome', '');
+        $txtValor = new TextInput('valor', 'valor', '');
+        $txtDescricao = new TextInput('descricao', 'descricao', '');
+        
+        $fieldset = new Fieldset('fieldset', 'fieldset');
+        
+        $formulario = new Form('form', 'form', 'POST', 'index.php');
+        $formulario->createField($txtNome, $fieldset);
+        $formulario->createField($txtValor, $fieldset);
+        $formulario->createField($txtDescricao, $fieldset);
+        
+        $formulario->render();
         ?>
     </body>
 </html>
