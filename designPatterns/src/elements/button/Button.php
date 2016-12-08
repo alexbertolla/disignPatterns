@@ -38,11 +38,11 @@ class Button extends AbstractElement implements InterfaceFullElements {
     }
 
     public function fecharTag() {
-        $this->tag.='</button>';
+        $this->tag .= '</button>';
     }
 
     public function setLabel() {
-        $this->tag .=$this->label->render();
+        $this->tag .= $this->label->render();
     }
 
     public function render() {

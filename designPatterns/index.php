@@ -13,6 +13,7 @@ use elements\paragraph\Paragraph;
 use elements\label\Label;
 use elements\button\Button;
 use elements\fieldset\Fieldset;
+use elements\select\Select;
 ?>
 <html>
     <head>
@@ -22,18 +23,28 @@ use elements\fieldset\Fieldset;
     <body>
         <?php
         include_once './autoload.php';
-        
-        $txtNome = new TextInput('nome', 'nome', '');
-        $txtValor = new TextInput('valor', 'valor', '');
-        $txtDescricao = new TextInput('descricao', 'descricao', '');
-        
+
+        $select = new Select('select', 'select', FALSE, new Label('Categoria: '));
+        $select->addChild(1, 'Cat1');
+        $select->addChild(2, 'Cat2');
+        $select->addChild(3, 'Cat3');
+
+        $txtNome = new TextInput('nome', 'nome', '', new Label('Nome: '));
+        $txtValor = new TextInput('valor', 'valor', '', new Label('Valor: '));
+        $txtDescricao = new TextInput('descricao', 'descricao', '', new Label('Descrção: '));
+        $btnEnviar = new Button('enviar', 'enviar', 'button', new Label('Enviar'));
+
         $fieldset = new Fieldset('fieldset', 'fieldset');
-        
+
         $formulario = new Form('form', 'form', 'POST', 'index.php');
-        $formulario->createField($txtNome, $fieldset);
-        $formulario->createField($txtValor, $fieldset);
-        $formulario->createField($txtDescricao, $fieldset);
+        $formulario->createField(new Paragraph($txtNome), $fieldset);
+        $formulario->createField(new Paragraph($txtValor), $fieldset);
+        $formulario->createField(new Paragraph($txtDescricao), $fieldset);
+        $formulario->createField(new Paragraph($select), $fieldset);
+            
+        $formulario->createField(new Paragraph($btnEnviar), $fieldset);
         
+
         $formulario->render();
         ?>
     </body>
