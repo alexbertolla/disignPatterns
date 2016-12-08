@@ -19,12 +19,12 @@ use elements\label\Label;
  */
 class Select implements InterfaceElement, InterfaceFullElements {
 
-    private $id;
-    private $name;
-    private $tag;
-    private $label;
-    private $children;
-    private $multselction;
+    public $id;
+    public $name;
+    public $tag;
+    public $label;
+    public $children;
+    public $multselction;
 
     public function __construct($name, $id, $multselection = FALSE, Label $label = NULL) {
         $this->name = $name;

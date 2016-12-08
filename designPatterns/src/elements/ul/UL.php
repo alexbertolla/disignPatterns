@@ -6,58 +6,61 @@
  * and open the template in the editor.
  */
 
-namespace elements\fieldset;
+namespace elements\ul;
 
 use interfaces\InterfaceElement;
 use interfaces\InterfaceFullElements;
+use interfaces\InterfaceElementHasChildren;
 
 /**
- * Description of Filedset
+ * Description of UL
  *
  * @author alex.bertolla
  */
-class Fieldset implements InterfaceElement, InterfaceFullElements {
+class UL implements InterfaceElement, InterfaceFullElements, InterfaceElementHasChildren {
 
-    private $tag;
+    public $id;
     public $name;
-    private $id;
-    private $children;
+    public $tag;
+    public $children;
 
     public function __construct($name, $id) {
         $this->name = $name;
         $this->id = $id;
         $this->children = [];
-    }
-
-    function addChild(InterfaceElement $element) {
-        $this->children[] = $element;
-    }
-
-    public function renderChildren() {
-        foreach ($this->children as $child) {
-            $this->tag.=$child->render();
-        }
+        $this->abrirTag();
     }
 
     public function abrirTag() {
         $attributes = $this->setAttributes();
-        $this->tag = "<fieldset {$attributes}>";
+        $this->tag = "<ul {$attributes} >";
+    }
+
+    public function addChild(InterfaceElement $element) {
+        $this->children[$element->name] = $element;
     }
 
     public function fecharTag() {
-        $this->tag .= "</fieldset>";
+        $this->tag.='</ul>';
     }
 
     public function render() {
-        $this->abrirTag();
         $this->renderChildren();
         $this->fecharTag();
         return $this->tag;
     }
 
-    public function setAttributes() {
-        return " name='{$this->name}'"
-                . " id='{$this->id}' ";
+    public function renderChildren() {
+        $children = '';
+        foreach ($this->children as $child) {
+            $children .= $child->render();
+        }
+        return $children;
     }
 
+    public function setAttributes() {
+        return "name='{$this->name}, id='$this->id'";
+    }
+
+//put your code here
 }

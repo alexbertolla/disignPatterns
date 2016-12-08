@@ -18,7 +18,7 @@ use elements\label\Label;
  */
 class RadioInput extends AbstractInput {
 
-    private $checked;
+    public $checked;
 
     public function __construct($name, $id, $value, $checked, Label $label) {
         parent::__construct($name, $id, $value, 'radio', $label);

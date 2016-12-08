@@ -12,14 +12,19 @@ use elements\form\validators\Validator;
 use interfaces\InterfaceFullElements;
 use interfaces\InterfaceElement;
 use elements\fieldset\Fieldset;
+use interfaces\InterfaceEditbleElement;
+use interfaces\InterfaceElementHasChildren;
+use elements\ul\UL;
+use elements\li\LI;
 
 /**
  * Description of Form
  *
  * @author alex
  */
-class Form extends Validator implements InterfaceFullElements, InterfaceElement {
+class Form extends Validator implements InterfaceFullElements, InterfaceElement, InterfaceElementHasChildren {
 
+    private $headerMessages;
     private $name;
     private $id;
     private $form;
@@ -33,6 +38,19 @@ class Form extends Validator implements InterfaceFullElements, InterfaceElement 
         $this->method = $method;
         $this->action = $action;
         $this->children = [];
+        $this->setHeaderMessages();
+        parent::__construct($this);
+    }
+
+    private function setHeaderMessages() {
+        $this->headerMessages = new UL('header', 'header');
+        $this->addChild($this->headerMessages);
+    }
+
+    public function addMessageToHeader(LI $liErrorMessage) {
+        print_r($liErrorMessage->render());
+//        echo $liErrorMessage->render() . '|';
+        $this->headerMessages->addChild($liErrorMessage);
     }
 
     public function abrirTag() {
@@ -58,7 +76,7 @@ class Form extends Validator implements InterfaceFullElements, InterfaceElement 
     }
 
     public function render() {
-        $renderAll = $this->renderElements();
+        $renderAll = $this->renderChildren();
         $this->renderPrepare($renderAll);
         echo $this->form;
     }
@@ -78,18 +96,37 @@ class Form extends Validator implements InterfaceFullElements, InterfaceElement 
         echo $resultado;
     }
 
-    public function renderElements() {
-        $form = '';
-//        $form .= $this->children->render();
-        foreach ($this->children as $child) {
-            $form .= $child->render();
-        }
-        return $form;
+    public function createField(InterfaceElement $element, Fieldset $field) {
+        $field->addChild($element);
+        $this->addChild($field);
     }
 
-    public function createField(InterfaceElement $element, Fieldset $field ) {
-        $field->addChild($element);
-        $this->children[$field->name] = $field;
+    public function pupular(array $dados = NULL) {
+        foreach ($dados as $key => $value) {
+            foreach ($this->children as $name => $element) {
+                if (($element instanceof InterfaceEditbleElement) && ($key === $name)) {
+                    $element->setValue($value);
+                }
+            }
+        }
+    }
+
+    public function validarCampos() {
+        $this->validarCampoVazio($this->children['nome']);
+        $this->validarCampoNumerico($this->children['valor']);
+        $this->validarCampoMaxLenght($this->children['descricao']);
+    }
+
+    public function addChild(InterfaceElement $element) {
+        $this->children[$element->name] = $element;
+    }
+
+    public function renderChildren() {
+        $children = '';
+        foreach ($this->children as $child) {
+            $children .= $child->render();
+        }
+        return $children;
     }
 
 }

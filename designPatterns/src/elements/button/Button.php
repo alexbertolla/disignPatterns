@@ -19,11 +19,11 @@ use elements\label\Label;
  */
 class Button extends AbstractElement implements InterfaceFullElements {
 
-    private $id;
-    private $name;
-    private $tag;
-    private $type;
-    private $label;
+    public $id;
+    public $name;
+    public $tag;
+    public $type;
+    public $label;
 
     public function __construct($name, $id, $type, Label $label) {
         $this->id = $id;

@@ -18,10 +18,10 @@ use interfaces\InterfaceElement;
  */
 class Label implements InterfaceElement, InterfaceFullElements {
 
-    private $id;
-    private $name;
-    private $label;
-    private $tag;
+    public $id;
+    public $name;
+    public $label;
+    public $tag;
 
     public function __construct($label, $name = '', $id = '') {
         $this->id = $id;

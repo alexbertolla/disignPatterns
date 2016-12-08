@@ -7,7 +7,7 @@ spl_autoload_register(function($className) {
     if (is_file($file)) {
         require_once($file);
     } else {
-//        echo "Could not load class {$className}. File not found: {$file}";
-//        die();
+        echo "Could not load class {$className}. File not found: {$file}";
+        die();
     }
 });

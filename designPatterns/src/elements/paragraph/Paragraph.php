@@ -18,10 +18,10 @@ use interfaces\InterfaceFullElements;
  */
 class Paragraph implements InterfaceElement, InterfaceFullElements {
 
-    private $id;
-    private $name;
-    private $tag;
-    private $contentLine;
+    public $id;
+    public $name;
+    public $tag;
+    public $contentLine;
 
     public function __construct(InterfaceElement $elemento = NULL, $name = '', $id = '') {
         $this->id = $id;

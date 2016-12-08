@@ -11,20 +11,21 @@ namespace elements\input;
 use interfaces\InterfaceElement;
 use interfaces\InterfaceEmptyElements;
 use elements\label\Label;
+use interfaces\InterfaceEditbleElement;
 
 /**
  * Description of AbstractInput
  *
  * @author alex
  */
-abstract class AbstractInput implements InterfaceElement, InterfaceEmptyElements {
+abstract class AbstractInput implements InterfaceElement, InterfaceEmptyElements, InterfaceEditbleElement {
 
-    protected $name;
-    protected $id;
-    protected $input;
-    protected $value;
-    protected $type;
-    protected $label;
+    public $name;
+    public $id;
+    public $input;
+    public $value;
+    public $type;
+    public $label;
 
     public function __construct($name, $id, $value, $type, Label $label = NULL) {
         $this->type = $type;
@@ -39,6 +40,10 @@ abstract class AbstractInput implements InterfaceElement, InterfaceEmptyElements
                 . " name='{$this->name}' "
                 . " id='{$this->id}' "
                 . " value='{$this->value}' ";
+    }
+
+    public function setValue($value) {
+        $this->value = $value;
     }
 
 }

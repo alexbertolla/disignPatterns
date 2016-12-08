@@ -19,7 +19,7 @@ use elements\label\Label;
  */
 class TextInput extends AbstractInput implements InterfaceInput {
 
-    private $placeholder;
+    public $placeholder;
 
     public function __construct($name, $id, $value, Label $label = NULL, $placeholder = '') {
         parent::__construct($name, $id, $value, 'text', $label);
@@ -48,5 +48,7 @@ class TextInput extends AbstractInput implements InterfaceInput {
             $this->input = $this->label->render() . $this->input;
         }
     }
+
+    
 
 }
